@@ -1,16 +1,17 @@
 CXXTEST = $(HOME)/git/cxxtest
 
-TESTS = MyTestSuite1.h MyTestSuite2.h
-GEN_FILE = $(TESTS:.h=.cpp)
-BIN = $(TESTS:.h=.exe)
+HEADER= MyTestSuite1.h MyTestSuite2.h
+SOURCE= $(HEADER:.h=.cpp)
+OBJ = $(HEADER:.h=.o)
 
-all:$(BIN)
+all:$(OBJ)
 
-$(BIN):$(GEN_FILE)
+
+.cpp.o:
 	g++ -I$(CXXTEST) $< -o $@
 
 .h.cpp:
 	cxxtestgen --error-printer $< -o $@
 
 clean:
-	rm -f $(GEN_FILE) $(BIN)
+	rm -f $(SOURCE) $(OBJ)
